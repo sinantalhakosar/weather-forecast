@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="h-100 d-flex align-items-center justify-content-center img-contain" style="overflow-x:hidden;overflow-y:hidden;">
+<div class="row card mx-0 d-flex justify-content-center mh-75 w-100 bg-info">
+  <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+    <h5 class="my-0 mr-md-auto font-weight-normal">Welcome {{ user.username }}!</h5>
+    <nav class="nav nav-pills nav-fill">
+      <a id="3" class="nav-item nav-link {% if range == 3 %} active {% endif %}" href="{% url 'three_days' %}" onclick="$('#5').removeClass('active');$(this).addClass('active');">3 Days Forecast</a>
+      <a id="5" class="nav-item nav-link {% if range == 5 %} active {% endif %}" href="{% url 'five_days' %}" onclick="$('#3').removeClass('active');$(this).addClass('active');">5 Days Forecast</a>
+    </nav>
+    <a class="btn btn-outline-primary" href="{% url 'logout' %}">Sign Out</a>
+  </div>
+    <div class="row my-5 d-flex justify-content-center">
+      <div class="row mw-100 d-flex justify-content-center">
+        <span id="select-change"></span>
+      <select name="city" id="select2" required class="form-control" onchange="fetch('/weather/city_change/?city='+$(this).val()).then(response => window.location.reload())">
+        {% if not data %}
+        <option value="" selected>Select City</option>
+        {% endif %}
+        {% for city in cities %}
+        {% if selected == city.name %}
+          <option value="{{city.name}}" selected>{{city.value}} - {{city.name}}</option>
+        {% else %}
+        <option value="{{city.name}}">{{city.value}} - {{city.name}}</option>
+        {% endif %}
+        {% endfor %}
+    </select>
+    </div>
+    </div>
+    <div class="row mb-5 d-flex justify-content-center">
+      <div class="container">
+          <div class="card-deck mb-3 text-center">
+            {% if data %}
+            {% for date in data.weather %}
+            <div class="card mb-4 box-shadow bg-light">
+              <div class="card-header">
+                <h4 class="my-0 font-weight-normal">{{date.date}}</h4>
+              </div>
+              <div class="card-body">
+                <h1 class="card-title pricing-card-title">{{date.avgtempC}}&#176; <small class="text-muted">/ avg</small></h1>
+                <ul class="list-unstyled mt-3 mb-4">
+                  <li><i class="fas fa-temperature-high"></i> Max Temp: {{date.maxtempC}}&#176;</li>
+                  <li><i class="fas fa-temperature-low"></i> Min Temp: {{date.mintempC}}&#176;</li>
+                  <li><i class="far fa-sun"></i> Sun Hour: {{date.sunHour}}</li>
+                  <li><i class="fas fa-radiation"></i> UV Index: {{date.uvIndex}}</li>
+                </ul>
+                <button type="button" class="btn btn-lg btn-block btn-primary" data-toggle="modal" data-target="{{'#'|add:date.date }}">Details</button>
+              </div>
+            </div>
+
+             <!-- Modal -->
+            <div class="modal fade" id="{{date.date}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header d-flex justify-content-center align-items-center">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Date: {{date.date}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">Hour</th>
+                          <th scope="col">Temperature</th>
+                          <th scope="col">Humidity</th>
+                          <th scope="col">Feels Like</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for hour in date.hourly %}
+                        <tr>
+                          <th scope="row">{{hour.time}}</th>
+                          <td>{{hour.tempC}} &#176;</td>
+                          <td>{{hour.humidity}} %</td>
+                          <td>{{hour.FeelsLikeC}} &#176;</td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+          </div>
+        </div>
+      </div>
+</div>
+</div>
+        {% endblock %}

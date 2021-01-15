@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="h-100 d-flex align-items-center justify-content-center img-contain">
+<div class="row card mx-0 d-flex justify-content-center h-100 w-75 bg-info">
+    <div class="row my-5 d-flex justify-content-center">
+        <h1 class="bg-gradient-light" style="color: white;">
+            <i class="spinner fas fa-sun"></i>
+            Welcome Weather Forecast
+            <i class="spinner fas fa-satellite-dish"></i>
+        </h1>
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+    <div class="row my-5 d-flex justify-content-center">
+    <form class="form-inline" action="{% url 'signin' %}" method="post">
+        {% csrf_token %}
+        <div class="form-group mb-2">
+          <label for="staticUsername" class="sr-only">Email</label>
+          <input type="text" name="username" required class="form-control" id="staticUsername" placeholder="Username" >
+        </div>
+        <div class="form-group mx-sm-3 mb-2">
+          <label for="inputPassword2" class="sr-only">Password</label>
+          <input type="password" name="password1" required class="form-control" id="inputPassword2" placeholder="Password" >
+        </div>
+        <button type="submit" class="btn btn-primary mb-2 ">Sign In</button>
+        <a type="button" class="btn btn-warning mx-sm-3 mb-2" href="{% url 'signup' %}">Sign Up</a>
+      </form>
+    </div>
+    <div class="row mb-5 d-flex justify-content-center">
+        <div class="container">
+            <div class="card-deck mb-3 text-center">
+              <div class="card mb-4 box-shadow bg-light">
+                <div class="card-header">
+                  <h4 class="my-0 font-weight-normal">Today</h4>
+                </div>
+                <div class="card-body">
+                  <h1 class="card-title pricing-card-title"><i class="fas fa-thermometer-full"></i> <small class="text-muted">/ avg</small></h1>
+                  <ul class="list-unstyled mt-3 mb-4">
+                    <li>Max Temp: <i class="fas fa-temperature-high"></i></li>
+                    <li>Min Temp: <i class="fas fa-temperature-low"></i></li>
+                    <li>Sun Hour: <i class="far fa-sun"></i></li>
+                    <li>Uv Index: <i class="fas fa-radiation"></i></li>
+                  </ul>
+                  <button type="button" class="btn btn-lg btn-block btn-primary">Details</button>
+                </div>
+              </div>
+              <div class="card mb-4 box-shadow">
+                <div class="card-header">
+                  <h4 class="my-0 font-weight-normal">Tomorrow</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title"><i class="fas fa-thermometer-full"></i> <small class="text-muted">/ avg</small></h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                      <li>Max Temp: <i class="fas fa-temperature-high"></i></li>
+                      <li>Min Temp: <i class="fas fa-temperature-low"></i></li>
+                      <li>Sun Hour: <i class="far fa-sun"></i></li>
+                      <li>Uv Index: <i class="fas fa-radiation"></i></li>
+                    </ul>
+                  <button type="button" class="btn btn-lg btn-block btn-primary">Details</button>
+                </div>
+              </div>
+              <div class="card mb-4 box-shadow">
+                <div class="card-header">
+                  <h4 class="my-0 font-weight-normal">After Tomorrow</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title"><i class="fas fa-thermometer-full"></i> <small class="text-muted">/ avg</small></h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                      <li>Max Temp: <i class="fas fa-temperature-high"></i></li>
+                      <li>Min Temp: <i class="fas fa-temperature-low"></i></li>
+                      <li>Sun Hour: <i class="far fa-sun"></i></li>
+                      <li>Uv Index: <i class="fas fa-radiation"></i></li>
+                    </ul>
+                  <button type="button" class="btn btn-lg btn-block btn-primary">Details</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+</div>
+</div>
+<!-- <footer>
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+        © 2020 Copyright:
+        <a class="text-dark" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+      </div>
+</footer> -->
+        {% endblock %}

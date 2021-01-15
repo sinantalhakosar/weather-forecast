@@ -1,0 +1,26 @@
+.main-card-container{
+    max-width: 95% !important;
+}
+body {
+    background: url('../images/bg-1.jpeg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  -o-background-size: cover;
+   }
+@-moz-keyframes spin {
+    from { -moz-transform: rotate(0deg); }
+    to { -moz-transform: rotate(360deg); }
+}
+@-webkit-keyframes spin {
+    from { -webkit-transform: rotate(0deg); }
+    to { -webkit-transform: rotate(360deg); }
+}
+@keyframes spin {
+    from {transform:rotate(0deg);}
+    to {transform:rotate(360deg);}
+}
+.spinner{
+    -webkit-animation: spin 2.7s infinite ease, round 2.7s infinite ease;
+    animation: spin 2.7s infinite ease, round 2.7s infinite ease;
+}
